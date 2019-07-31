@@ -16,12 +16,38 @@
     </form>
   </div>
 </nav>
-profiles{{profiles|json}}
-<ngb-accordion #a="ngbAccordion" activeIds="custom-panel-1">
-  <ngb-panel *ngFor="let profile of profiles">
-    <div class="d-flex align-items-center justify-content-between">
-      <h5 class="m-0">First panel - {{ opened ? 'opened' : 'collapsed' }}</h5>
-      <button ngbPanelToggle class="btn btn-link p-0">Toggle first</button>
+<p>Total results:{{profiles.length}} </p>
+<div *ngFor="let profile of profiles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+  <div class="card w-75">
+    <img class="card-img-top" src="{{profile.avatar_url}}" alt="Card image cap">
+    <div class="card-block">
+      <h3 class="card-title">{{profile.login}}</h3>
+      <p class="card-text">Profile URL:{{profile.html_url}}</p>
+      <p class="card-text">Repos URL:{{profile.repos_url}}</p>
+      <p class="card-text">Type:{{profile.type}}</p>
+      <div>
+        <button type="button" class="btn btn-primary float-right" (click)="isCollapsed = !isCollapsed;getProfileDetails(profile.login)" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Details</button>
+      </div>
+      <div id="collapseExample" [ngbCollapse]="isCollapsed">
+        <div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Repository</th>
+                <th scope="col">Language</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of profileDetails | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                <td>{{ detail.name }}</td>
+                <td>{{ detail.language }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <ngb-pagination class="d-flex justify-content-end" [(page)]="page" [pageSize]="pageSize" [collectionSize]="profileDetails.length"></ngb-pagination>
+        </div>
+      </div>
     </div>
-  </ngb-panel>
-</ngb-accordion>
+  </div>
+</div>
+<ngb-pagination class="d-flex justify-content-end" [(page)]="page" [pageSize]="pageSize" [collectionSize]="profiles.length"></ngb-pagination>

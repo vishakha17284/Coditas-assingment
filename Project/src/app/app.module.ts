@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -13,7 +15,7 @@ import { ProfilesService } from './services/profiles.service';
     AppComponent, ProfilesComponent
   ],
   imports: [
-    BrowserModule, HttpModule
+    BrowserModule, HttpModule, NgbModule.forRoot(), HttpClientModule
   ],
   providers: [ ProfilesService ],
   bootstrap: [ AppComponent ]
