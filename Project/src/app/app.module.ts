@@ -8,14 +8,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProfilesService } from './services/profiles.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 @NgModule( {
   declarations: [
-    AppComponent, ProfilesComponent
+    AppComponent, ProfilesComponent, SearchPipe
   ],
   imports: [
-    BrowserModule, HttpModule, NgbModule.forRoot(), HttpClientModule
+    BrowserModule, HttpModule, NgbModule.forRoot(), HttpClientModule, FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [ ProfilesService ],
   bootstrap: [ AppComponent ]
