@@ -1,16 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#">Profiles</a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Name</a>
-          <a class="dropdown-item" href="#">Rank</a>
-        </div>
-      </li>
-    </ul>
-    <input [formControl]="queryField" type="text" id="keyword" placeholder="search for artists..." autofocus/>
+  <div id="navbarSupportedContent" style="margin-left:23rem">
+    <div ngbDropdown class="d-inline">
+      <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>Sort</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+        <button class="dropdown-item" (click)="sortByName('asc')">Name(A-Z)</button>
+        <button class="dropdown-item" (click)="sortByName('desc')">Name(Z-A)</button>
+        <button class="dropdown-item" (click)="sortByRank('asc')">Rank
+          <i class="material-icons">arrow_upward
+          </i>
+        </button>
+        <button class="dropdown-item" (click)="sortByRank('desc')">Rank
+          <i class="material-icons">arrow_downward
+          </i>
+        </button>
+      </div>
+    </div>
+    <input [formControl]="queryField" type="text" id="keyword" placeholder="search profiles..." autofocus/>
   </div>
 </nav>
 <p>Total results:{{profiles.length}} </p>
@@ -23,28 +29,32 @@
       <p class="card-text">Repos URL:{{profile.repos_url}}</p>
       <p class="card-text">Type:{{profile.type}}</p>
       <div>
-        <button type="button" class="btn btn-primary float-right" (click)="isCollapsed = !isCollapsed;getProfileDetails(profile.login)" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Details</button>
+        <button type="button" class="btn btn-primary float-right" (click)="getProfileDetails(profile.login);isActive == profile.id ? isActive = null : isActive = profile.id" [attr.aria-expanded]="isActive != profile.id"
+          aria-controls="collapseDetails">{{isActive == profile.id ? "Collapse" : "Details"}}</button>
       </div>
-      <div id="collapseExample" [ngbCollapse]="isCollapsed">
-        <div>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Repository</th>
-                <th scope="col">Language</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let detail of profileDetails | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-                <td>{{ detail.name }}</td>
-                <td>{{ detail.language }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <ngb-pagination class="d-flex justify-content-end" [(page)]="page" [pageSize]="pageSize" [collectionSize]="profileDetails.length"></ngb-pagination>
-        </div>
-      </div>
+      <ng-container *ngIf="isActive == profile.id" [ngTemplateOutlet]="details" [ngTemplateOutletContext]="{id:profile.id}"></ng-container>
     </div>
   </div>
 </div>
-<ngb-pagination class="d-flex justify-content-end" [(page)]="page" [pageSize]="pageSize" [collectionSize]="profiles.length"></ngb-pagination>
+<ngb-pagination class=" d-flex justify-content-end " [(page)]="page " [pageSize]="pageSize " [collectionSize]="profiles.length "></ngb-pagination>
+<ng-template #details let-id="id ">
+  <div id="collapseDetails" *ngIf="isActive == id">
+    <div>
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col ">Repository</th>
+            <th scope="col ">Language</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of profileDetails | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+            <td>{{ detail.name }}</td>
+            <td>{{ detail.language }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ngb-pagination class="d-flex justify-content-end " [(page)]="page " [pageSize]="pageSize " [collectionSize]="profileDetails.length "></ngb-pagination>
+    </div>
+  </div>
+</ng-template>

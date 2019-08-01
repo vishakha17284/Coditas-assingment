@@ -15,8 +15,8 @@ export class ProfilesService {
     return this.http.get<ProfileModel[]>( 'https://api.github.com/users' );
   }
 
-  searchProfilesByName( searchQuery: string ): Observable<ProfileModel[]> {
-    return this.http.get<ProfileModel[]>( `https://api.github.com/search/users?q=${ searchQuery }` );
+  searchProfilesByName( searchQuery: string ): Observable<any> {
+    return this.http.get<any>( `https://api.github.com/search/users?q=${ searchQuery }` );
   }
 
   getProfileDetails( username: string ): Observable<ProfileDetailsModel[]> {
