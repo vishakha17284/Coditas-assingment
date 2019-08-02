@@ -13,9 +13,10 @@ export class ProfilesComponent {
 
   profiles: Array<ProfileModel> = [];
   profileDetails: Array<ProfileDetailsModel> = [];
-  isCollapsed = true;
   page: number = 1;
   pageSize: number = 3;
+  repoPage: number = 1;
+  repoPageSize: number = 3;
   searchText: string = '';
   queryField: FormControl = new FormControl();
   buttonName: string = "Details";
@@ -25,7 +26,6 @@ export class ProfilesComponent {
   }
 
   ngOnInit() {
-    console.log( "this.query", this.queryField )
     if ( this.queryField.value != '' ) {
       this.queryField.valueChanges
         .subscribe( queryField => this.searchProfile( queryField ) )
@@ -38,18 +38,17 @@ export class ProfilesComponent {
   getProfiles() {
     this.profileService.getProfiles().subscribe( data => {
       this.profiles = data;
-      console.log( "profiles", this.profiles )
     } )
   }
 
   searchProfile( searchQuery: string ) {
     this.profileService.searchProfilesByName( searchQuery ).subscribe( data => {
       this.profiles = data.items;
-      console.log( "profiles searched", this.profiles )
     } )
   }
 
   getProfileDetails( username: string ) {
+    this.repoPage = 1;
     if ( username ) {
       this.profiles.forEach( element => {
         if ( element.login == username ) {

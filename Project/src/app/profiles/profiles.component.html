@@ -36,7 +36,7 @@
     </div>
   </div>
 </div>
-<ngb-pagination class=" d-flex justify-content-end " [(page)]="page " [pageSize]="pageSize " [collectionSize]="profiles.length "></ngb-pagination>
+<ngb-pagination class="d-flex justify-content-end " [(page)]="page " [pageSize]="pageSize " [collectionSize]="profiles.length "></ngb-pagination>
 <ng-template #details let-id="id ">
   <div id="collapseDetails" *ngIf="isActive == id">
     <div>
@@ -48,13 +48,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let detail of profileDetails | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+          <tr *ngFor="let detail of profileDetails | slice: (repoPage-1) * repoPageSize : (repoPage-1) * repoPageSize + repoPageSize ">
             <td>{{ detail.name }}</td>
             <td>{{ detail.language }}</td>
           </tr>
         </tbody>
       </table>
-      <ngb-pagination class="d-flex justify-content-end " [(page)]="page " [pageSize]="pageSize " [collectionSize]="profileDetails.length "></ngb-pagination>
+      <ngb-pagination class="d-flex justify-content-end " [(page)]="repoPage " [pageSize]="repoPageSize " [collectionSize]="profileDetails.length "></ngb-pagination>
     </div>
   </div>
 </ng-template>
