@@ -6,14 +6,14 @@
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
         <button class="dropdown-item" (click)="sortByName('asc')">Name(A-Z)</button>
         <button class="dropdown-item" (click)="sortByName('desc')">Name(Z-A)</button>
-        <button class="dropdown-item" (click)="sortByRank('asc')">Rank
+        <!-- <button class="dropdown-item" (click)="sortByRank('asc')">Rank
           <i class="material-icons">arrow_upward
           </i>
         </button>
         <button class="dropdown-item" (click)="sortByRank('desc')">Rank
           <i class="material-icons">arrow_downward
           </i>
-        </button>
+        </button> -->
       </div>
     </div>
     <input [formControl]="queryField" type="text" id="keyword" placeholder="search profiles..." autofocus/>
